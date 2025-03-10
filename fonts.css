@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Fascinate+Inline&family=Lexend+Tera:wght@100..900&family=Pacifico&family=Permanent+Marker&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik+Vinyl&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+
+header {
+    font-family: 'Permanent Marker', sans-serif;
+}
+.page-container {
+    font-family: 'Sour Gummy', sans-serif;
+    min-height: 100vh;
+    height: 100%;
+}

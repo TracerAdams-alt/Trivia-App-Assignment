@@ -16,6 +16,7 @@ function validateForm(type) {
             return false; 
         }
     }
+    console.log("Saving username:", username);
 
     return true; 
 }

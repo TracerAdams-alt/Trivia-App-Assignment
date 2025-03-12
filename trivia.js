@@ -14,7 +14,6 @@ class Question {
     }
 }
 
-// Store questions in an array
 let questions = [
     new Question("What is the most common type of rattlesnake?", 
         ['a. Timber Rattlesnake', 'b. Diamondback Rattlesnake', 'c. Prairie Rattlesnake'], 
@@ -31,13 +30,18 @@ let questions = [
          'c. Light frequencies compressing as objects move apart'], 
         'b'),
     new Question("How many hours are in a day?", 
-        ['a. 2 Hours', 'b. 21 Hours', 'c. 24'], 
+        ['a. 2 Hours', 'b. 21 Hours', 'c. 24 Hours'], 
         'c')
 ];
 
+let firstTime = true;
+
 function startTrivia() {
+    let message = firstTime ? `<p class="text-center">Pick A Card!</p>` : '';  
+    firstTime = false;
+
     let ourHTML = `
-    <p class="text-center">Pick A Card!</p>
+    ${message}
     <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
     <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
     <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>`;
@@ -62,9 +66,14 @@ function questionGen(button) {
     button.parentElement.innerHTML = questionHTML;
 }
 
+let score = 0
+let scoreHTML = `<p>${score}</p>`;
+
 function checkAnswer(selected, correct) {
     if (selected === correct) {
         alert("✅ Correct!");
+        score++;
+        document.getElementById('score-display').textContent = score; // Update score display
     } else {
         alert(`❌ Wrong! The correct answer was ${correct.toUpperCase()}`);
     }

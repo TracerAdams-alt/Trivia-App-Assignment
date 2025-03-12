@@ -70,17 +70,22 @@ let score = 0
 let scoreHTML = `<p>${score}</p>`;
 
 function checkAnswer(selected, correct) {
+    const answerButtons = document.querySelectorAll('.btn-outline-primary');
+    answerButtons.forEach(button => button.disabled = true);
+
     if (selected === correct) {
         alert("✅ Correct!");
         score++;
         document.getElementById('score-display').textContent = score;
+
+        if (score >= 10) {
+            window.location.href = 'result.html';
+        }
     } else {
         alert(`❌ Wrong! The correct answer was ${correct.toUpperCase()}`);
     }
-    if (score >= 10) {
-        window.location.href = 'result.html';
-    }
 }
+
 
 function usernameDisplay() {
     let name = username.value;

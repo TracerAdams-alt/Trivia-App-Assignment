@@ -73,9 +73,12 @@ function checkAnswer(selected, correct) {
     if (selected === correct) {
         alert("✅ Correct!");
         score++;
-        document.getElementById('score-display').textContent = score; // Update score display
+        document.getElementById('score-display').textContent = score;
     } else {
         alert(`❌ Wrong! The correct answer was ${correct.toUpperCase()}`);
+    }
+    if (score >= 10) {
+        window.location.href = 'result.html';
     }
 }
 

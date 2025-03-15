@@ -80,29 +80,31 @@ function checkAnswer(selected, correct) {
     const answerButtons = document.querySelectorAll('.btn-outline-primary');
     answerButtons.forEach(button => button.disabled = true);
 
-    const resultIcon = document.createElement('span');
-    resultIcon.classList.add('ms-2', 'fw-bold');
+    // Get or create the result indicator
+    let resultIcon = document.getElementById('result-indicator');
+    if (!resultIcon) {
+        resultIcon = document.createElement('div');
+        resultIcon.id = 'result-indicator';
+        resultIcon.classList.add('fw-bold', 'mt-2', 'text-end');
+        const scoreDisplay = document.getElementById('score-display');
+        scoreDisplay.parentElement.insertAdjacentElement('afterend', resultIcon);
+    }
 
+    // Add the checkmark or X for each question answered
     if (selected === correct) {
         score++;
         document.getElementById('score-display').textContent = score;
-        resultIcon.innerHTML = '&#10004;';
-        resultIcon.style.color = 'green';
-
-        if (score >= 10) {
-            window.location.href = 'result.html';
-        }
+        resultIcon.innerHTML += '<span class="checkmark">✔</span>'; // Add checkmark
     } else {
-        resultIcon.innerHTML = '&#10060;'; 
-        resultIcon.style.color = 'red';
+        resultIcon.innerHTML += '<span class="xmark">❌</span>'; // Add X
     }
 
-    const questionCard = [...answerButtons].find(btn => btn.textContent.trim().startsWith(selected)).closest('.question-card');
-    const selectedButton = [...questionCard.querySelectorAll('.btn-outline-primary')].find(btn => btn.textContent.trim().startsWith(selected));
-    if (selectedButton) {
-        selectedButton.parentElement.appendChild(resultIcon);
+    // Check if score is 10 or more to redirect
+    if (score >= 10) {
+        window.location.href = 'result.html';
     }
 }
+
 
 
 

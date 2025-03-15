@@ -80,18 +80,30 @@ function checkAnswer(selected, correct) {
     const answerButtons = document.querySelectorAll('.btn-outline-primary');
     answerButtons.forEach(button => button.disabled = true);
 
+    const resultIcon = document.createElement('span');
+    resultIcon.classList.add('ms-2', 'fw-bold');
+
     if (selected === correct) {
-        alert("✅ Correct!");
         score++;
         document.getElementById('score-display').textContent = score;
+        resultIcon.innerHTML = '&#10004;';
+        resultIcon.style.color = 'green';
 
         if (score >= 10) {
             window.location.href = 'result.html';
         }
     } else {
-        alert(`❌ Wrong! The correct answer was ${correct.toUpperCase()}`);
+        resultIcon.innerHTML = '&#10060;'; 
+        resultIcon.style.color = 'red';
+    }
+
+    const questionCard = [...answerButtons].find(btn => btn.textContent.trim().startsWith(selected)).closest('.question-card');
+    const selectedButton = [...questionCard.querySelectorAll('.btn-outline-primary')].find(btn => btn.textContent.trim().startsWith(selected));
+    if (selectedButton) {
+        selectedButton.parentElement.appendChild(resultIcon);
     }
 }
+
 
 
 function usernameDisplay() {

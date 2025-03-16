@@ -10,3 +10,13 @@ header {
     min-height: 100vh;
     height: 100%;
 }
+.cardFlip {
+    height: 200px;
+    width: 150px;
+    background-image: url(images/backsidePlayingCard.jpg);
+    background-size: 140%;
+    background-position: center;
+    border-radius: 8px;
+    color: rgb(42, 169, 42);
+    font-size: 30px;
+}

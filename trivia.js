@@ -33,10 +33,30 @@ let questions = [
         'b'),
     new Question("How many hours are in a day?", 
         ['a. 2 Hours', 'b. 21 Hours', 'c. 24 Hours'], 
-        'c')
+        'c'),
+    new Question("What is the Utah state flower?", 
+        ['a. Indian Paintbrush', 'b. Silver Lupine', 'c. Sego Lily'],
+        'b'),
+    new Question("What kind of fuel is coal?",
+        ['a. Petrol', 'b. Electric', 'c. Fossil'],
+        'c'
+    ),
+    new Question("What is the term for when overprinting money drops the value?",
+        ['a. Deflation', 'b. Inflation', 'c. Popped Tire'],
+        'b'
+    ),
+    new Question("Is the Earth round?",
+        ['a. yes', 'b. no', 'c. yes but in c'],
+        'a'
+    ),
+    new Question("why?",
+        ['huh?', 'nah fam', 'many people eat cereal for breakfast.'],
+        'c'
+    )
 ];
 
 let firstTime = true;
+let currentIndex = 0;
 
 function startTrivia() {
     let message = firstTime ? `<p class="text-center">Pick A Card!</p>` : '';  
@@ -44,23 +64,47 @@ function startTrivia() {
 
     let ourHTML = `
     ${message}
-    <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
-    <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
-    <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
-    <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
-    <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
-    <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
-    <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
-    <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
-    <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>
-    <div class="question-card"><button class="p-4 m-2 rounded-2" onclick="questionGen(this)">flip</button></div>`;
+    <div class="d-flex flex-wrap justify-content-evenly">
+    <div class="question-card col-lg-4 col-md-4 col-sm-12 p-4 m-2 rounded-2">
+        <button class="cardFlip" onclick="questionGen(this)"></button>
+    </div>
+    <div class="question-card col-lg-4 col-md-4 col-sm-12 p-4 m-2 rounded-2">
+        <button class="cardFlip" onclick="questionGen(this)"></button>
+    </div>
+    <div class="question-card col-lg-4 col-md-4 col-sm-12 p-4 m-2 rounded-2">
+        <button class="cardFlip" onclick="questionGen(this)"></button>
+    </div>
+    <div class="question-card col-lg-4 col-md-4 col-sm-12 p-4 m-2 rounded-2">
+        <button class="cardFlip" onclick="questionGen(this)"></button>
+    </div>
+    <div class="question-card col-lg-4 col-md-4 col-sm-12 p-4 m-2 rounded-2">
+        <button class="cardFlip" onclick="questionGen(this)"></button>
+    </div>
+    <div class="question-card col-lg-4 col-md-4 col-sm-12 p-4 m-2 rounded-2">
+        <button class="cardFlip" onclick="questionGen(this)"></button>
+    </div>
+    <div class="question-card col-lg-4 col-md-4 col-sm-12 p-4 m-2 rounded-2">
+        <button class="cardFlip" onclick="questionGen(this)"></button>
+    </div>
+    <div class="question-card col-lg-4 col-md-4 col-sm-12 p-4 m-2 rounded-2">
+        <button class="cardFlip" onclick="questionGen(this)"></button>
+    </div>
+    <div class="question-card col-lg-4 col-md-4 col-sm-12 p-4 m-2 rounded-2">
+        <button class="cardFlip" onclick="questionGen(this)"></button>
+    </div>
+    <div class="question-card col-lg-4 col-md-4 col-sm-12 p-4 m-2 rounded-2">
+        <button class="cardFlip" onclick="questionGen(this)"></button>
+    </div>
+`;
     
     pageContainer.insertAdjacentHTML('beforeend', ourHTML);
 }
 
 function questionGen(button) {
-    let randomIndex = Math.floor(Math.random() * questions.length);
-    let selectedQuestion = questions[randomIndex];
+    if (currentIndex >= questions.length) {
+        currentIndex = 0;
+    }
+    let selectedQuestion = questions[currentIndex];
 
     let optionsHTML = selectedQuestion.options.map(option => `
         <button class="btn btn-outline-primary m-1" onclick="checkAnswer('${option[0]}', '${selectedQuestion.correctAnswer}')">
@@ -73,6 +117,8 @@ function questionGen(button) {
     `;
 
     button.parentElement.innerHTML = questionHTML;
+
+    currentIndex++;
 }
 
 let score = 0;
@@ -137,14 +183,13 @@ window.onload = function () {
 function displayResultSentence() {
     const score = sessionStorage.getItem('score');
     if (score !== null) {
-        if (score >= 7) {  // Score 7 or more
+        if (score >= 7) { 
             let ourHTML = `Good Work!`;
             resultSentence.insertAdjacentHTML('beforeend', ourHTML);
         }
-        else {  // Score less than 7
+        else { 
             let ourHTML = `Study Harder Next Time!`;
             resultSentence.insertAdjacentHTML('beforeend', ourHTML);
         }
     }
 }
-

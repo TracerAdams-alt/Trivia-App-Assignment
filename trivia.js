@@ -76,11 +76,12 @@ function questionGen(button) {
 let score = 0
 let scoreHTML = `<p>${score}</p>`;
 
+let questionsAnswered = 0;
+
 function checkAnswer(selected, correct) {
     const answerButtons = document.querySelectorAll('.btn-outline-primary');
     answerButtons.forEach(button => button.disabled = true);
 
-    // Get or create the result indicator
     let resultIcon = document.getElementById('result-indicator');
     if (!resultIcon) {
         resultIcon = document.createElement('div');
@@ -90,17 +91,15 @@ function checkAnswer(selected, correct) {
         scoreDisplay.parentElement.insertAdjacentElement('afterend', resultIcon);
     }
 
-    // Add the checkmark or X for each question answered
     if (selected === correct) {
         score++;
         document.getElementById('score-display').textContent = score;
-        resultIcon.innerHTML += '<span class="checkmark">✔</span>'; // Add checkmark
+        resultIcon.innerHTML += '<span class="checkmark">✔</span>'; 
     } else {
-        resultIcon.innerHTML += '<span class="xmark">❌</span>'; // Add X
+        resultIcon.innerHTML += '<span class="xmark">❌</span>';
     }
-
-    // Check if score is 10 or more to redirect
-    if (score >= 10) {
+    questionsAnswered++;
+    if (questionsAnswered >= 10) {
         window.location.href = 'result.html';
     }
 }

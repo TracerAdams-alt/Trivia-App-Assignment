@@ -1,6 +1,8 @@
 let pageContainer = document.getElementById('page-container');
 let username = document.getElementById('username');
 let usernameId = document.getElementById('username-display');
+let results = document.getElementById('results');
+let resultSentence = document.getElementById('result-sentence');
 
 class Question {
     constructor(question, options, correctAnswer) {
@@ -73,7 +75,8 @@ function questionGen(button) {
     button.parentElement.innerHTML = questionHTML;
 }
 
-let score = 0
+let score = 0;
+let missed = 0;
 let scoreHTML = `<p>${score}</p>`;
 
 let questionsAnswered = 0;
@@ -97,15 +100,15 @@ function checkAnswer(selected, correct) {
         resultIcon.innerHTML += '<span class="checkmark">✔</span>'; 
     } else {
         resultIcon.innerHTML += '<span class="xmark">❌</span>';
+        missed++;
     }
     questionsAnswered++;
+
     if (questionsAnswered >= 10) {
+        sessionStorage.setItem('score', score);
         window.location.href = 'result.html';
     }
 }
-
-
-
 
 function usernameDisplay() {
     let name = username.value;
@@ -119,4 +122,29 @@ window.onload = function () {
     if (storedUsername && usernameDisplay) {
         usernameDisplay.textContent = storedUsername;
     }
+
+    const score = sessionStorage.getItem('score');
+    const resultsDisplay = document.getElementById('results');
+    if (score !== null) {
+        resultsDisplay.innerHTML = `${score} out of 10`;
+    } else {
+        resultsDisplay.innerHTML = "No score available";
+    }
+
+    displayResultSentence();
 }
+
+function displayResultSentence() {
+    const score = sessionStorage.getItem('score');
+    if (score !== null) {
+        if (score >= 7) {  // Score 7 or more
+            let ourHTML = `Good Work!`;
+            resultSentence.insertAdjacentHTML('beforeend', ourHTML);
+        }
+        else {  // Score less than 7
+            let ourHTML = `Study Harder Next Time!`;
+            resultSentence.insertAdjacentHTML('beforeend', ourHTML);
+        }
+    }
+}
+
